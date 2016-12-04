@@ -16,7 +16,12 @@
         android:entryValues="@array/pref_units_values"
         android:key="@string/pref_units_key"
         android:title="@string/pref_units_label" />
-
+    <ListPreference
+        android:defaultValue="#000000"
+        android:entries="@array/colors"
+        android:entryValues="@array/colors_values"
+        android:key="color"
+        android:title="Font color" />
     <!--<PreferenceCategory android:title="STORAGE">-->
         <!--<CheckBoxPreference-->
             <!--android:key="checkbox_preference"-->
