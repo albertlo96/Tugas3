@@ -2,6 +2,7 @@ package com.example.android.sunshine.app;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -62,7 +64,20 @@ public class ForecastFragment extends Fragment {
                 R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview,
                 new ArrayList<String>()
-        );
+        ){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView=(TextView) view.findViewById(R.id.list_item_forecast_textview);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                String col = prefs.getString("color","#000000");
+                /*YOUR CHOICE OF COLOR*/
+                textView.setTextColor(Color.parseColor(col));
+
+                return view;
+            }
+        };
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -88,7 +103,7 @@ public class ForecastFragment extends Fragment {
         updateWeather();
     }
 
-    private void updateWeather(){
+    private void updateWeather() {
         FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity(), forecastAdapter);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String loc = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
